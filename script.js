@@ -1,15 +1,15 @@
-// Get the screen ID from URL, e.g., ?id=7A
+// Get screen ID from URL, e.g., ?id=7A
 const params = new URLSearchParams(window.location.search);
-const screenId = params.get("id"); 
+const screenId = params.get("id");
 
 // Replace with your deployed Apps Script URL
-const apiUrl = "https://script.google.com/macros/s/AKfycbycKA3R2b38kD1_SYTglNqRznRDbX756xuxmSyx0DXEKj9DK2KFu5MT0Y9zxC6kNgzCrA/exec?id=" + screenId;
+const apiUrl = "https://script.google.com/macros/s/AKfycbzRE9Yj8uo2tociTLTcYspTxpnk_9UKbnrpc1j26F3RWwof0adB4v3Th77OCMjVKt0bSw/exec/exec?id=" + screenId;
 
 let images = [], index = 0;
-let slideTime = 8000;   // default 8 seconds
-let refreshTime = 60000; // default 1 minute
+let slideTime = 8000;   // default 8 sec
+let refreshTime = 60000; // default 1 min
 
-// Load configuration and images from Apps Script
+// Load config & images from Google Sheet via Apps Script
 async function loadConfig() {
   try {
     const res = await fetch(apiUrl);
@@ -18,8 +18,8 @@ async function loadConfig() {
     if (!data.images || data.images.length === 0) return;
 
     images = data.images;
-    slideTime = data.slideTime * 1000;      // convert to ms
-    refreshTime = data.refreshTime * 60000; // convert to ms
+    slideTime = data.slideTime * 1000;
+    refreshTime = data.refreshTime * 60000;
     index = 0;
 
     showImage();
@@ -28,7 +28,7 @@ async function loadConfig() {
   }
 }
 
-// Display the current image
+// Display current image
 function showImage() {
   if (!images || images.length === 0) return;
 
@@ -45,7 +45,7 @@ function showImage() {
 // Change image every slideTime
 setInterval(showImage, slideTime);
 
-// Reload config from Google Sheet every refreshTime
+// Reload config every refreshTime
 setInterval(loadConfig, refreshTime);
 
 // Initial load
